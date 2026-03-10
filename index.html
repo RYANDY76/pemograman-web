@@ -135,7 +135,7 @@
   function buka(hal) {
     document.getElementById('formLogin').style.display = hal === 'login' ? 'block' : 'none';
     document.getElementById('formRegister').style.display = hal === 'register' ? 'block' : 'none';
-    document.getElementById('judul').textContent = hal === 'login' ? 'Login' : '📝 Daftar';
+    document.getElementById('judul').textContent = hal === 'login' ? 'Login' : ' Daftar';
     document.getElementById('sukses').style.display = 'none';
     document.querySelectorAll('.pesan').forEach(e => e.textContent = '');
   }
