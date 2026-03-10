@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    label {
+      font-size: 13px;
+      color: #555;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #45a049; }
+
+    .link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .link span {
+      color: #4CAF50;
+      cursor: pointer;
+    }
+
+    .pesan {
+      font-size: 12px;
+      color: red;
+      margin-top: -10px;
+      margin-bottom: 8px;
+    }
+
+    .sukses {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2 id="judul">Login</h2>
+
+  <div class="sukses" id="sukses"></div>
+
+  <!-- Form Login -->
+  <div id="formLogin">
+    <label>Email</label>
+    <input type="text" id="lEmail" placeholder="Email"/>
+    <div class="pesan" id="errLE"></div>
+
+    <label>Password</label>
+    <input type="password" id="lPass" placeholder="Password"/>
+    <div class="pesan" id="errLP"></div>
+
+    <button onclick="login()">Masuk</button>
+    <div class="link">Belum punya akun? <span onclick="buka('register')">Daftar</span></div>
+  </div>
+
+  <!-- Form Register -->
+  <div id="formRegister" style="display:none">
+    <label>Nama</label>
+    <input type="text" id="rNama" placeholder="Nama lengkap"/>
+    <div class="pesan" id="errRN"></div>
+
+    <label>Email</label>
+    <input type="text" id="rEmail" placeholder="Email"/>
+    <div class="pesan" id="errRE"></div>
+
+    <label>Password</label>
+    <input type="password" id="rPass" placeholder="Password (min 6 karakter)"/>
+    <div class="pesan" id="errRP"></div>
+
+    <label>Konfirmasi Password</label>
+    <input type="password" id="rKonfirm" placeholder="Ulangi password"/>
+    <div class="pesan" id="errRK"></div>
+
+    <button onclick="register()">Daftar</button>
+    <div class="link">Sudah punya akun? <span onclick="buka('login')">Login</span></div>
+  </div>
+</div>
+
+<script>
+  function buka(hal) {
+    document.getElementById('formLogin').style.display = hal === 'login' ? 'block' : 'none';
+    document.getElementById('formRegister').style.display = hal === 'register' ? 'block' : 'none';
+    document.getElementById('judul').textContent = hal === 'login' ? 'Login' : '📝 Daftar';
+    document.getElementById('sukses').style.display = 'none';
+    document.querySelectorAll('.pesan').forEach(e => e.textContent = '');
+  }
+
+  function login() {
+    document.querySelectorAll('.pesan').forEach(e => e.textContent = '');
+    const email = document.getElementById('lEmail').value.trim();
+    const pass  = document.getElementById('lPass').value;
+    let ok = true;
+
+    if (!email) { document.getElementById('errLE').textContent = '* Email harus diisi'; ok = false; }
+    if (!pass)  { document.getElementById('errLP').textContent = '* Password harus diisi'; ok = false; }
+
+    if (ok) {
+      const s = document.getElementById('sukses');
+      s.textContent = '✅ Login berhasil!';
+      s.style.display = 'block';
+    }
+  }
+
+  function register() {
+    document.querySelectorAll('.pesan').forEach(e => e.textContent = '');
+    const nama    = document.getElementById('rNama').value.trim();
+    const email   = document.getElementById('rEmail').value.trim();
+    const pass    = document.getElementById('rPass').value;
+    const konfirm = document.getElementById('rKonfirm').value;
+    let ok = true;
+
+    if (!nama)            { document.getElementById('errRN').textContent = '* Nama harus diisi'; ok = false; }
+    if (!email)           { document.getElementById('errRE').textContent = '* Email harus diisi'; ok = false; }
+    if (pass.length < 6)  { document.getElementById('errRP').textContent = '* Password min 6 karakter'; ok = false; }
+    if (pass !== konfirm) { document.getElementById('errRK').textContent = '* Password tidak cocok'; ok = false; }
+
+    if (ok) {
+      const s = document.getElementById('sukses');
+      s.textContent = '✅ Daftar berhasil! Silakan login.';
+      s.style.display = 'block';
+      setTimeout(() => buka('login'), 1500);
+    }
+  }
+</script>
+</body>
+</html>
